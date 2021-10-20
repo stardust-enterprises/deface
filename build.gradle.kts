@@ -9,7 +9,7 @@ allprojects {
         mavenLocal()
         mavenCentral()
 
-        maven(url = "https://jitpack.io")
+        maven("https://jitpack.io")
     }
 
     plugins.withType<JavaPlugin> {

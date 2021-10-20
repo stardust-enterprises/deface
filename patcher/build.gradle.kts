@@ -13,5 +13,7 @@ kotlin.sourceSets["main"].dependsOn(api)
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Plugins.KOTLIN}")
 
-    api(project(":patcher"))
+    api("org.ow2.asm:asm:${Dependencies.ASM}")
+    //api("org.ow2.asm:asm-commons:${Dependencies.ASM}")
+    api("org.ow2.asm:asm-tree:${Dependencies.ASM}")
 }
