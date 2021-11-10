@@ -1,6 +1,6 @@
 plugins {
     `java-library`
-    kotlin("jvm") version Plugins.KOTLIN
+    id("kotlin")
 }
 
 val api = kotlin.sourceSets.create("api") {

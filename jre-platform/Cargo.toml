@@ -1,0 +1,10 @@
+[package]
+name = "patcher"
+version = "1.0.0"
+authors = ["xTrM_"]
+
+[lib]
+crate_type = ["cdylib"]
+
+[dependencies]
+jni = "0.19.0"
