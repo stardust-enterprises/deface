@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream
 plugins {
     `java-library`
     kotlin("jvm")
+    id("fr.stardustenterprises.rust.importer") version "2.0.0"
 }
 
 val api = kotlin.sourceSets.create("api") {
@@ -14,6 +15,9 @@ val api = kotlin.sourceSets.create("api") {
 kotlin.sourceSets["main"].dependsOn(api)
 
 dependencies {
+    rustImport(project(":jre-platform"))
+    //rustImport(project(":android-platform"))
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Plugins.KOTLIN}")
 
     api("org.ow2.asm:asm:${Dependencies.ASM}")
