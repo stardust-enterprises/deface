@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version Plugins.KOTLIN apply false
 }
 
-group = "fr.stardust"
+group = "fr.stardustenterprises"
 version = "1.0-SNAPSHOT"
 
 subprojects {

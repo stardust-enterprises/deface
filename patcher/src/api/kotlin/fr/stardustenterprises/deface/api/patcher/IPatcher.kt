@@ -1,4 +1,4 @@
-package fr.stardust.deface.api.patcher
+package fr.stardustenterprises.deface.api.patcher
 
 interface IPatcher {
 

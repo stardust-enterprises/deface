@@ -1,4 +1,4 @@
-package fr.stardust.deface.api.patcher
+package fr.stardustenterprises.deface.api.patcher
 
 data class ClassDefinition(val classObject: Class<Any>, val classBuffer: Array<Byte>) {
     override fun equals(other: Any?): Boolean {

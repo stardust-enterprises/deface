@@ -1,7 +1,7 @@
-package fr.stardust.deface.patcher
+package fr.stardustenterprises.deface.patcher
 
-import fr.stardust.deface.api.patcher.ClassDefinition
-import fr.stardust.deface.api.patcher.IPatcher
+import fr.stardustenterprises.deface.api.patcher.ClassDefinition
+import fr.stardustenterprises.deface.api.patcher.IPatcher
 
 class Patcher : IPatcher {
 
