@@ -1,6 +1,6 @@
 extern crate jni;
 
-use std::ffi::c_void;
+use std::ffi::{c_void, CStr};
 use std::os::raw::c_int;
 use jni::objects::{JClass, JObject, JString};
 use jni::{JNIEnv};
@@ -13,10 +13,11 @@ pub unsafe extern "system" fn JNI_OnLoad(_vm: *mut JavaVM, _reserved: &mut c_voi
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_patcher_Patcher_getClass0<'a>(
-    env: *mut JNIEnv,
+    env: *mut JNIEnv<'a>,
     _this: JObject,
     class_name: JString
 ) -> JClass<'a> {
     let v = (*env).get_string_utf_chars(class_name).unwrap();
-    (*env).find_class(&v).unwrap()
+    let d = CStr::from_ptr(v).to_str().unwrap();
+    (*env).find_class(&d).unwrap()
 }
