@@ -1,5 +1,5 @@
 object Plugins {
-    const val KOTLIN = "1.5.31"
+    const val KOTLIN = "1.6.0"
 }
 
 object Dependencies {
