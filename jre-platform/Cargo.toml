@@ -8,6 +8,7 @@ crate_type = ["cdylib"]
 
 [dependencies]
 jni = "0.19.0"
+jvmti-sys = "0.1.0"
 
 [profile.release]
 lto = "thin"

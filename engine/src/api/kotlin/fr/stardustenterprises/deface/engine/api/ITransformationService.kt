@@ -1,6 +1,6 @@
 package fr.stardustenterprises.deface.engine.api
 
-interface IHookingEngine {
+interface ITransformationService {
 
     fun getClass(className: String): Class<Any>
 
