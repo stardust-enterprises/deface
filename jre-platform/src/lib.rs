@@ -1,23 +1,28 @@
 extern crate jni;
+extern crate jvmti;
 
 use std::ffi::{c_void, CStr};
 use std::os::raw::c_int;
-use std::ptr::null_mut;
+use std::ptr::{null, null_mut};
 use jni::objects::{JClass, JObject, JString};
 use jni::{JNIEnv};
-use jni::sys::{JavaVM, JNI_VERSION_1_4};
+use jni::sys::{JavaVM, jint, JNI_OK, JNI_VERSION_1_4};
+
 
 static mut JVM: *mut JavaVM = null_mut();
 
 #[no_mangle]
 pub unsafe extern "system" fn JNI_OnLoad(_vm: *mut JavaVM, _reserved: &mut c_void) -> c_int {
     JVM = _vm;
-    let v = (*JVM).GetEnv.unwrap().call()
-    if (*JVM).GetEnv.() {
+    // let holder: *mut *mut c_void = null_mut();
+    // let get_env = (*(*JVM)).GetEnv.unwrap();
+    //let val = get_env(JVM, holder, JVMTI_VERSION_1_0 as jint);
+    //println!("{}", val);
 
-    }
-    /**
-    if (m_jvm->GetEnv((void**)&m_jvmti, JVMTI_VERSION_1_0) == JNI_OK){
+    //**c_void as jvmti;
+
+    /*
+    if (m_jvm->get_env((void**)&m_jvmti, JVMTI_VERSION_1_0) == JNI_OK){
         jvmtiCapabilities capa;
         m_jvmti->GetCapabilities(&capa);
         //capa.can_get_bytecodes = 1; // idk if its necessary
@@ -53,5 +58,5 @@ pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeTr
     env: *mut JNIEnv<'a>,
     _this: JClass,
 ) -> JObject<'a> {
-
+    *null()
 }
