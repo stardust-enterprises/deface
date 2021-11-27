@@ -17,10 +17,11 @@ val api = kotlin.sourceSets.create("api") {
 kotlin.sourceSets["main"].dependsOn(api)
 
 dependencies {
-    rustImport(project(":jre-platform"))
+    //rustImport(project(":jre-platform"))
     //rustImport(project(":android-platform"))
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Plugins.KOTLIN}")
+    implementation("com.github.oshi:oshi-core:5.8.3")
 }
 
 // what the fuck
