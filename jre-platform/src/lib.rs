@@ -4,11 +4,10 @@ extern crate jvmti;
 
 use std::ffi::{c_void, CStr};
 use std::os::raw::c_int;
-use std::ptr::{null, null_mut};
-use jni::objects::{JClass, JObject, JString};
+use std::ptr::{null_mut};
+use jni::objects::{JClass, JString};
 use jni::{JNIEnv};
-use jni::sys::{JavaVM, jboolean, JNI_OK, JNI_VERSION_1_4, jobjectArray};
-use jvmti::environment::jni::JNI;
+use jni::sys::{JavaVM, jboolean, JNI_VERSION_1_4, jobjectArray};
 use jvmti::native::jvmti_native::{jclass, jint, JVMTI_VERSION_1_0, jvmtiEnv};
 
 static mut JVM: *mut JavaVM = null_mut();
@@ -21,14 +20,6 @@ pub unsafe extern "system" fn JNI_OnLoad(_vm: *mut JavaVM, _reserved: &mut c_voi
     (**JVM).GetEnv.unwrap()(JVM, cv, JVMTI_VERSION_1_0 as i32);
 
     JVMTI = (*cv) as *mut jvmtiEnv;
-
-
-    // let holder: *mut *mut c_void = null_mut();
-    // let get_env = (*(*JVM)).GetEnv.unwrap();
-    //let val = get_env(JVM, holder, JVMTI_VERSION_1_0 as jint);
-    //println!("{}", val);
-
-    //**c_void as jvmti;
 
     /*if (m_jvm->get_env((void**)&m_jvmti, JVMTI_VERSION_1_0) == JNI_OK) {
         jvmtiCapabilities capa;
@@ -84,13 +75,15 @@ pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeTr
     *cock
 }
 
-// todo fix c-style array*mut
 unsafe fn classarr(env: *mut JNIEnv, classes: *mut jclass, count: jint) -> jobjectArray {
     let classClass = (*env).find_class("java/lang/Class").unwrap();
     let jobjectArray = (*env).new_object_array(count, classClass, null_mut()).unwrap();
 
+    let arr: &[JClass] = std::slice::from_raw_parts(classes as *mut JClass, count as usize);
+
     for classIndex in 0..count {
-        (*env).set_object_array_element(jobjectArray, classIndex, classes[classIndex]);
+        drop((*env).set_object_array_element(jobjectArray, classIndex, arr[classIndex as usize]));
     }
+
     jobjectArray
 }
