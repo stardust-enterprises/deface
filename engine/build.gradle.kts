@@ -6,7 +6,7 @@ import java.io.ByteArrayOutputStream
 plugins {
     `java-library`
     kotlin("jvm")
-    id("fr.stardustenterprises.rust.importer") version "2.0.0"
+    id("fr.stardustenterprises.rust.importer") version "3.1.1"
 }
 
 val api = kotlin.sourceSets.create("api") {
@@ -17,11 +17,14 @@ val api = kotlin.sourceSets.create("api") {
 kotlin.sourceSets["main"].dependsOn(api)
 
 dependencies {
-    //rustImport(project(":jre-platform"))
-    //rustImport(project(":android-platform"))
+    rust(project(":jvm-platform"))
+    //rust(project(":android-platform"))
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Plugins.KOTLIN}")
-    implementation("com.github.oshi:oshi-core:5.8.3")
+    implementation("fr.stardustenterprises", "yanl", "0.7.1")
+
+    testImplementation("org.ow2.asm", "asm", "9.2")
+    testImplementation("org.ow2.asm", "asm-tree", "9.2")
 }
 
 // what the fuck

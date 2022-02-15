@@ -1,3 +1,0 @@
-[submodule "jre-platform/rust-jvmti"]
-	path = jre-platform/rust-jvmti
-	url = https://github.com/xea/rust-jvmti/

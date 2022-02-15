@@ -1,0 +1,10 @@
+[package]
+name = "jvm-platform"
+version = "1.0.0"
+authors = ["xTrM_"]
+
+[lib]
+crate_type = ["cdylib"]
+
+[dependencies]
+jvm-rs = { git = "https://github.com/x4e/jvm-rs/" }

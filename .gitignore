@@ -3,6 +3,7 @@
 .idea
 .run
 bin
-build
+**build
+**target
 .classpath
 .project

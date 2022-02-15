@@ -39,6 +39,14 @@ JNIEXPORT jboolean JNICALL Java_fr_stardustenterprises_deface_engine_NativeTrans
 JNIEXPORT void JNICALL Java_fr_stardustenterprises_deface_engine_NativeTransformationService_requestRetransform0
   (JNIEnv *, jclass, jclass);
 
+/*
+ * Class:     fr_stardustenterprises_deface_engine_NativeTransformationService
+ * Method:    registerNatives0
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_fr_stardustenterprises_deface_engine_NativeTransformationService_registerNatives0
+  (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif
