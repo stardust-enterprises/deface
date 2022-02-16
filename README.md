@@ -11,7 +11,7 @@ the project is divided into 2 types of submodules:
    [platform-jvm][platform-jvm] or [platform-art][platform-art]
  - frameworks 
    - tools designed around the [engine][engine] for ease of use, like 
-   [framework-patcher][framework-patcher] and [framework-mix][framework-mix]
+   [framework-patcher][fwpatcher] and [framework-mix][fwmix]
     
 
 # contributing
@@ -38,9 +38,9 @@ this project is under the [ISC license][blob-license].
 
 [platform-art]: https://github.com/stardust-enterprises/deface/tree/trunk/platform-art
 
-[framework-patcher]: htps://github.com/stardust-enterprises/deface/tree/trunk/framework-patcher
+[fwpatcher]: htps://github.com/stardust-enterprises/deface/tree/trunk/framework-patcher
 
-[framework-mix]: htps://github.com/stardust-enterprises/deface/tree/trunk/framework-mix
+[fwmix]: htps://github.com/stardust-enterprises/deface/tree/trunk/framework-mix
 
 [fork]: https://github.com/stardust-enterprises/deface/fork "fork this repository"
 
