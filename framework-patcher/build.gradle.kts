@@ -1,6 +1,6 @@
 plugins {
     `java-library`
-    id("kotlin")
+    kotlin("jvm")
 }
 
 val api = kotlin.sourceSets.create("api") {
@@ -15,7 +15,7 @@ dependencies {
 
     api(project(":engine"))
 
-    api("org.ow2.asm:asm:${Dependencies.ASM}")
-    api("org.ow2.asm:asm-tree:${Dependencies.ASM}")
-    //api("org.ow2.asm:asm-commons:${Dependencies.ASM}")
+    api("org.ow2.asm", "asm", Dependencies.ASM)
+    api("org.ow2.asm", "asm-tree", Dependencies.ASM)
+//    api("org.ow2.asm", "asm-commons", Dependencies.ASM)
 }

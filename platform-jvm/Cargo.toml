@@ -1,5 +1,5 @@
 [package]
-name = "jvm-platform"
+name = "platform-jvm"
 version = "1.0.0"
 authors = ["xTrM_"]
 

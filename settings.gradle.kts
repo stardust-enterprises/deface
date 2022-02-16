@@ -9,7 +9,8 @@ pluginManagement {
 
 rootProject.name = "deface"
 
-include("patcher")
 include("engine")
-include("jvm-platform")
-include("android-platform")
+include("platform-jvm")
+include("platform-art")
+include("framework-mix")
+include("framework-patcher")

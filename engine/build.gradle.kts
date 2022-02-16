@@ -17,14 +17,15 @@ val api = kotlin.sourceSets.create("api") {
 kotlin.sourceSets["main"].dependsOn(api)
 
 dependencies {
-    rust(project(":jvm-platform"))
-    //rust(project(":android-platform"))
+    rust(project(":platform-jvm"))
+//    rust(project(":platform-art"))
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Plugins.KOTLIN}")
-    implementation("fr.stardustenterprises", "yanl", "0.7.1")
 
-    testImplementation("org.ow2.asm", "asm", "9.2")
-    testImplementation("org.ow2.asm", "asm-tree", "9.2")
+    implementation("fr.stardustenterprises", "yanl", Dependencies.YANL)
+
+    testImplementation("org.ow2.asm", "asm", Dependencies.ASM)
+    testImplementation("org.ow2.asm", "asm-tree", Dependencies.ASM)
 }
 
 // what the fuck

@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "fr.stardustenterprises"
-version = "1.0-SNAPSHOT"
+version = "0.0.1-SNAPSHOT"
 
 subprojects {
     group = "${this.rootProject.group}.deface"
