@@ -12,7 +12,6 @@ import org.objectweb.asm.tree.InsnNode
 import java.security.ProtectionDomain
 import java.util.*
 import kotlin.test.Test
-import kotlin.test.assertNotNull
 
 internal class NativeTests {
     @Test
@@ -31,19 +30,22 @@ internal class NativeTests {
 
     @Test
     fun `can get any class`() {
-        fun get(className: String) =
-            NativeTransformationService.getClass(className)
-
-        assertNotNull(get("java/lang/String"))
-        try {
-            assertNotNull(get("sun/instrument/InstrumentationImpl"))
-        } catch(_: NoClassDefFoundError) {
+        assertDoesNotThrow {
+            NativeTransformationService.getClass(
+                "java/lang/String"
+            )
+            NativeTransformationService.getClass(
+                "java/security/ProtectionDomain"
+            )
+            NativeTransformationService.getClass(
+                "NativeTests"
+            )
         }
-        assertNotNull(get("java/security/ProtectionDomain"))
-        assertNotNull(get("NativeTests"))
 
         assertThrows<NoClassDefFoundError> {
-            get("llllllllllllllllllllllllllll/${UUID.randomUUID()}")
+            NativeTransformationService.getClass(
+                "llllllllllllllllllllllllllll/${UUID.randomUUID()}"
+            )
         }
     }
 
@@ -57,7 +59,9 @@ internal class NativeTests {
         assert(!NativeTransformTest.hasBeenModified())
 
         NativeTransformationService.addTransformers(Transformer)
-        NativeTransformationService.retransformClasses(NativeTransformTest::class.java)
+        NativeTransformationService.retransformClasses(
+            NativeTransformTest::class.java
+        )
 
         assert(NativeTransformTest.hasBeenModified())
     }
