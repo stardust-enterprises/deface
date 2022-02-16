@@ -3,12 +3,23 @@ plugins {
     kotlin("jvm")
 }
 
-val api = kotlin.sourceSets.create("api") {
-    kotlin.srcDir("src/api/kotlin")
-    resources.srcDir("src/api/resources")
-}
+sourceSets {
+    val main by getting
+    val test by getting
 
-kotlin.sourceSets["main"].dependsOn(api)
+    val api by creating {
+        java.srcDir("src/api/kotlin")
+        resources.srcDir("src/api/resources")
+
+        this.compileClasspath += main.compileClasspath
+        this.runtimeClasspath += main.runtimeClasspath
+    }
+
+    listOf(main, test).forEach {
+        it.compileClasspath += api.output
+        it.runtimeClasspath += api.output
+    }
+}
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Plugins.KOTLIN}")

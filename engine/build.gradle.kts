@@ -1,4 +1,4 @@
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION", "GrazieInspection")
 
 import org.gradle.internal.jvm.Jvm
 import java.io.ByteArrayOutputStream
@@ -14,10 +14,8 @@ sourceSets {
     val test by getting
 
     val api by creating {
-        java {
-            srcDir("src/api/kotlin")
-            resources.srcDir("src/api/resources")
-        }
+        java.srcDir("src/api/kotlin")
+        resources.srcDir("src/api/resources")
 
         this.compileClasspath += main.compileClasspath
         this.runtimeClasspath += main.runtimeClasspath
@@ -38,12 +36,18 @@ dependencies {
     rust(project(":platform-jvm"))
 //    rust(project(":platform-art"))
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Plugins.KOTLIN}")
+    implementation("org.jetbrains.kotlin", "kotlin-stdlib", Plugins.KOTLIN)
 
     implementation("fr.stardustenterprises", "yanl", Dependencies.YANL)
 
+    testImplementation("org.jetbrains.kotlin", "kotlin-test", Plugins.KOTLIN)
+
     testImplementation("org.ow2.asm", "asm", Dependencies.ASM)
     testImplementation("org.ow2.asm", "asm-tree", Dependencies.ASM)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 // what the fuck
