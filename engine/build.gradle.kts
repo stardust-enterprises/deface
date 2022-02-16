@@ -9,12 +9,30 @@ plugins {
     id("fr.stardustenterprises.rust.importer") version "3.1.1"
 }
 
-val api = kotlin.sourceSets.create("api") {
-    kotlin.srcDir("src/api/kotlin")
-    resources.srcDir("src/api/resources")
+sourceSets {
+    val main by getting
+    val test by getting
+
+    val api by creating {
+        java {
+            srcDir("src/api/kotlin")
+            resources.srcDir("src/api/resources")
+        }
+
+        this.compileClasspath += main.compileClasspath
+        this.runtimeClasspath += main.runtimeClasspath
+    }
+
+    listOf(main, test).forEach {
+        it.compileClasspath += api.output
+        it.runtimeClasspath += api.output
+    }
 }
 
-kotlin.sourceSets["main"].dependsOn(api)
+val projectName = project.name
+val desc = "Yet Another Native Library loader and extractor for the JVM."
+val authors = arrayOf("xtrm")
+val repo = "stardust-enterprises/$projectName"
 
 dependencies {
     rust(project(":platform-jvm"))
