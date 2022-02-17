@@ -5,15 +5,12 @@ deface is an open-source hooking engine and framework for the
 
 ## structure
 
-the project is divided into 3 types of submodules:
+the project is divided into 3 submodules:
  - [engine][engine]
    - the transformation engine, everything is based around it
  - platforms 
    - platform implementations of the engine native, such as 
    [platform-jvm][platform-jvm] or [platform-art][platform-art]
- - frameworks 
-   - tools designed around the [engine][engine] for ease of use, like 
-   [framework-patcher][fwpatcher] and [framework-mix][fwmix]
     
 
 # contributing
@@ -39,10 +36,6 @@ this project is under the [ISC license][blob-license].
 [platform-jvm]: https://github.com/stardust-enterprises/deface/tree/trunk/platform-jvm
 
 [platform-art]: https://github.com/stardust-enterprises/deface/tree/trunk/platform-art
-
-[fwpatcher]: htps://github.com/stardust-enterprises/deface/tree/trunk/framework-patcher
-
-[fwmix]: htps://github.com/stardust-enterprises/deface/tree/trunk/framework-mix
 
 [fork]: https://github.com/stardust-enterprises/deface/fork "fork this repository"
 
