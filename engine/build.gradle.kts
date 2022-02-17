@@ -7,6 +7,7 @@ plugins {
     `java-library`
     kotlin("jvm")
     id("fr.stardustenterprises.rust.importer") version "3.1.1"
+    `maven-publish`
 }
 
 sourceSets {
@@ -37,11 +38,9 @@ dependencies {
 //    rust(project(":platform-art"))
 
     implementation("org.jetbrains.kotlin", "kotlin-stdlib", Plugins.KOTLIN)
-
     implementation("fr.stardustenterprises", "yanl", Dependencies.YANL)
 
     testImplementation("org.jetbrains.kotlin", "kotlin-test", Plugins.KOTLIN)
-
     testImplementation("org.ow2.asm", "asm", Dependencies.ASM)
     testImplementation("org.ow2.asm", "asm-tree", Dependencies.ASM)
 }
@@ -130,5 +129,13 @@ val generateJniHeaders: Task by tasks.creating {
                     commandLine(javac, "-h", jniHeaderDirectory.absolutePath, outputFile.absolutePath)
                 }.assertNormalExitValue()
             }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
     }
 }
