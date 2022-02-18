@@ -31,19 +31,19 @@ internal class NativeTests {
     @Test
     fun `can get any class`() {
         assertDoesNotThrow {
-            NativeTransformationService.getClass(
+            NativeTransformationService.findClass(
                 "java/lang/String"
             )
-            NativeTransformationService.getClass(
+            NativeTransformationService.findClass(
                 "java/security/ProtectionDomain"
             )
-            NativeTransformationService.getClass(
+            NativeTransformationService.findClass(
                 "NativeTests"
             )
         }
 
         assertThrows<NoClassDefFoundError> {
-            NativeTransformationService.getClass(
+            NativeTransformationService.findClass(
                 "llllllllllllllllllllllllllll/${UUID.randomUUID()}"
             )
         }
