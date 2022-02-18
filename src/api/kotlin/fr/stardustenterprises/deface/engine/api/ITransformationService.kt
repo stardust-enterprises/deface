@@ -15,7 +15,7 @@ interface ITransformationService {
      *
      * @return the class with that name
      */
-    fun getClass(className: String): Class<*>
+    fun findClass(className: String): Class<*>
 
     /**
      * Gets all the loaded classes in the JVM.
@@ -41,7 +41,14 @@ interface ITransformationService {
      * @return whether or not the class is modifiable
      */
     fun isModifiable(className: String): Boolean =
-        isModifiable(getClass(className))
+        isModifiable(findClass(className))
+
+    /**
+     * Force request retransforming of a [Class].
+     *
+     * @param classes array/vararg of [Class]
+     */
+    fun retransformClasses(vararg classes: Class<*>)
 
     /**
      * Registers transformers to be added.
@@ -51,9 +58,9 @@ interface ITransformationService {
     fun addTransformers(vararg transformers: IClassTransformer)
 
     /**
-     * Force request retransforming of a [Class].
+     * Removes the provided transformers.
      *
-     * @param classes array/vararg of [Class]
+     * @param transformers array/vararg of [IClassTransformer]
      */
-    fun retransformClasses(vararg classes: Class<*>)
+    fun removeTransformers(vararg transformers: IClassTransformer)
 }
