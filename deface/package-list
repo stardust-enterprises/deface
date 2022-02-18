@@ -1,0 +1,24 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:fr.stardustenterprises.deface.engine.api////PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/index.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/IClassTransformer///PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-class-transformer/index.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/IClassTransformer/transformClass/#java.lang.Class[*]?#java.lang.ClassLoader?#kotlin.String#java.security.ProtectionDomain?#kotlin.ByteArray/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-class-transformer/transform-class.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/ITransformationService///PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-transformation-service/index.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/ITransformationService/addTransformers/#kotlin.Array[fr.stardustenterprises.deface.engine.api.IClassTransformer]/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-transformation-service/add-transformers.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/ITransformationService/findClass/#kotlin.String/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-transformation-service/find-class.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/ITransformationService/getLoadedClasses/#/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-transformation-service/get-loaded-classes.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/ITransformationService/isModifiable/#java.lang.Class[*]/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-transformation-service/is-modifiable.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/ITransformationService/isModifiable/#kotlin.String/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-transformation-service/is-modifiable.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/ITransformationService/removeTransformers/#kotlin.Array[fr.stardustenterprises.deface.engine.api.IClassTransformer]/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-transformation-service/remove-transformers.html
+$dokka.location:fr.stardustenterprises.deface.engine.api/ITransformationService/retransformClasses/#kotlin.Array[java.lang.Class[*]]/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine.api/-i-transformation-service/retransform-classes.html
+$dokka.location:fr.stardustenterprises.deface.engine////PointingToDeclaration/deface/fr.stardustenterprises.deface.engine/index.html
+$dokka.location:fr.stardustenterprises.deface.engine/NativeTransformationService///PointingToDeclaration/deface/fr.stardustenterprises.deface.engine/-native-transformation-service/index.html
+$dokka.location:fr.stardustenterprises.deface.engine/NativeTransformationService/addTransformers/#kotlin.Array[fr.stardustenterprises.deface.engine.api.IClassTransformer]/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine/-native-transformation-service/add-transformers.html
+$dokka.location:fr.stardustenterprises.deface.engine/NativeTransformationService/findClass/#kotlin.String/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine/-native-transformation-service/find-class.html
+$dokka.location:fr.stardustenterprises.deface.engine/NativeTransformationService/getLoadedClasses/#/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine/-native-transformation-service/get-loaded-classes.html
+$dokka.location:fr.stardustenterprises.deface.engine/NativeTransformationService/isModifiable/#java.lang.Class[*]/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine/-native-transformation-service/is-modifiable.html
+$dokka.location:fr.stardustenterprises.deface.engine/NativeTransformationService/removeTransformers/#kotlin.Array[fr.stardustenterprises.deface.engine.api.IClassTransformer]/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine/-native-transformation-service/remove-transformers.html
+$dokka.location:fr.stardustenterprises.deface.engine/NativeTransformationService/retransformClasses/#kotlin.Array[java.lang.Class[*]]/PointingToDeclaration/deface/fr.stardustenterprises.deface.engine/-native-transformation-service/retransform-classes.html
+fr.stardustenterprises.deface.engine
+fr.stardustenterprises.deface.engine.api
+
