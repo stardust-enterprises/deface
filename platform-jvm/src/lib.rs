@@ -23,7 +23,7 @@ use jvm_rs::{
         jmethodID,
         jbyte,
         jlong,
-        jsize
+        jsize,
     },
     jvmti::{
         JVMTI_VERSION_1_0,
@@ -51,7 +51,7 @@ pub unsafe extern "system" fn JNI_OnLoad(_vm: *mut JavaVM, _reserved: &mut c_voi
         let mut ver: jint = -1;
         let mut error = (*(*JVMTI)).GetVersionNumber.unwrap()(JVMTI, &mut ver);
         if error != jvmtiError_JVMTI_ERROR_NONE {
-            println!("Something has gone horribly wrong. @ GetVersionNumber, ver/error: {}/{}", ver, error);
+            println!("[libdeface] Something has gone horribly wrong. @ GetVersionNumber, ver/error: {}/{}", ver, error);
             return -1;
         }
 
@@ -60,7 +60,7 @@ pub unsafe extern "system" fn JNI_OnLoad(_vm: *mut JavaVM, _reserved: &mut c_voi
         };
         error = (*(*JVMTI)).GetCapabilities.unwrap()(JVMTI, &mut capabilities);
         if error != jvmtiError_JVMTI_ERROR_NONE {
-            println!("Something has gone horribly wrong. @ GetCapabilities, error: {}", error);
+            println!("[libdeface] Something has gone horribly wrong. @ GetCapabilities, error: {}", error);
             return -1;
         }
 
@@ -73,7 +73,7 @@ pub unsafe extern "system" fn JNI_OnLoad(_vm: *mut JavaVM, _reserved: &mut c_voi
 
         error = (*(*JVMTI)).AddCapabilities.unwrap()(JVMTI, &mut capabilities);
         if error != jvmtiError_JVMTI_ERROR_NONE {
-            println!("Something has gone horribly wrong. @ AddCapabilities, error: {}", error);
+            println!("[libdeface] Something has gone horribly wrong. @ AddCapabilities, error: {}", error);
             return -1;
         }
 
@@ -119,13 +119,13 @@ pub unsafe extern "system" fn JNI_OnLoad(_vm: *mut JavaVM, _reserved: &mut c_voi
 
         error = (*(*JVMTI)).SetEventCallbacks.unwrap()(JVMTI, &callbacks, size_of::<jvmtiEventCallbacks>() as jint);
         if error != jvmtiError_JVMTI_ERROR_NONE {
-            println!("Something has gone horribly wrong. @ SetEventCallbacks, error: {}", error);
+            println!("[libdeface] Something has gone horribly wrong. @ SetEventCallbacks, error: {}", error);
             return -1;
         }
 
         error = (*(*JVMTI)).SetEventNotificationMode.unwrap()(JVMTI, jvmtiEventMode_JVMTI_ENABLE, jvmtiEvent_JVMTI_EVENT_CLASS_FILE_LOAD_HOOK, null_mut());
         if error != jvmtiError_JVMTI_ERROR_NONE {
-            println!("Something has gone horribly wrong. @ SetEventNotificationMode, error: {}", error);
+            println!("[libdeface] Something has gone horribly wrong. @ SetEventNotificationMode, error: {}", error);
             return -1;
         }
     }
@@ -157,7 +157,6 @@ unsafe extern "C" fn loadHook(
                 jni_env,
                 SERVICE_CLASS,
                 TRANSFORM_METHOD,
-
                 class_being_redefined,
                 loader,
                 jname,
@@ -169,7 +168,12 @@ unsafe extern "C" fn loadHook(
                 let transformed_buffer_size: jsize = (*(*jni_env)).GetArrayLength.unwrap()(jni_env, transformed_buffer);
                 let mut result_buffer: *mut c_uchar = null_mut();
 
-                (*(*jvmti_env)).Allocate.unwrap()(jvmti_env, transformed_buffer_size as jlong, &mut result_buffer);
+                let error = (*(*jvmti_env)).Allocate.unwrap()(jvmti_env, transformed_buffer_size as jlong, &mut result_buffer);
+                if error != jvmtiError_JVMTI_ERROR_NONE {
+                    println!("[libdeface] Something has gone horribly wrong. @ Allocate, error: {}", error);
+                    return;
+                }
+
                 (*(*jni_env)).GetByteArrayRegion.unwrap()(jni_env, transformed_buffer, 0, transformed_buffer_size, result_buffer as *mut jbyte);
 
                 *new_class_data_len = transformed_buffer_size;
@@ -197,7 +201,11 @@ pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeTr
 ) -> jobjectArray {
     let mut class_count: jint = 0;
     let mut classes_ptr: *mut jclass = null_mut();
-    (*(*JVMTI)).GetLoadedClasses.unwrap()(JVMTI, &mut class_count, &mut classes_ptr);
+    let error = (*(*JVMTI)).GetLoadedClasses.unwrap()(JVMTI, &mut class_count, &mut classes_ptr);
+    if error != jvmtiError_JVMTI_ERROR_NONE {
+        println!("[libdeface] Something has gone horribly wrong. @ GetLoadedClasses, error: {}", error);
+        return null_mut();
+    }
 
     let class_name = CString::new("java/lang/Class").unwrap();
     let class_array_class = (*(*env)).FindClass.unwrap()(env, class_name.as_ptr());
@@ -212,7 +220,11 @@ pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeTr
     target_class: jclass,
 ) -> jboolean {
     let mut return_value: jboolean = 0;
-    (*(*JVMTI)).IsModifiableClass.unwrap()(JVMTI, target_class, &mut return_value);
+    let error = (*(*JVMTI)).IsModifiableClass.unwrap()(JVMTI, target_class, &mut return_value);
+    if error != jvmtiError_JVMTI_ERROR_NONE {
+        println!("[libdeface] Something has gone horribly wrong. @ IsModifiableClass, error: {}", error);
+        return 0;
+    }
     return_value
 }
 
@@ -222,7 +234,10 @@ pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeTr
     _class: jclass,
     target_class: jclass,
 ) {
-    (*(*JVMTI)).RetransformClasses.unwrap()(JVMTI, 1, &target_class);
+    let error = (*(*JVMTI)).RetransformClasses.unwrap()(JVMTI, 1, &target_class);
+    if error != jvmtiError_JVMTI_ERROR_NONE {
+        println!("[libdeface] Something has gone horribly wrong. @ RetransformClasses, error: {}", error);
+    }
 }
 
 #[no_mangle]
@@ -242,7 +257,7 @@ unsafe fn create_object_array(
     env: *mut JNIEnv,
     class_count: jint,
     classes: *mut jobject,
-    class_array: jclass
+    class_array: jclass,
 ) -> jobjectArray {
     let arr = std::slice::from_raw_parts(classes, class_count as usize);
 
