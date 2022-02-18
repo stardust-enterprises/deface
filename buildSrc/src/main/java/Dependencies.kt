@@ -8,6 +8,7 @@ object Plugins {
 
 object Dependencies {
     const val ASM = "9.2"
+    const val KOFFEE = "8.0.2"
     const val YANL = "0.7.1"
     const val KOTLIN = kotlinVersion
 }

@@ -32,7 +32,7 @@ sourceSets {
 
 val projectName = project.name
 group = "fr.stardustenterprises"
-version = "0.1.0"
+version = "0.2.0"
 
 val desc = "Allows for runtime transformation of classes via JVM bytecode."
 val authors = arrayOf("xtrm")
@@ -40,18 +40,23 @@ val repo = "stardust-enterprises/$projectName"
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io/")
+    maven("https://maven.hackery.site/")
 }
 
 dependencies {
     rust(project(":platform-jvm"))
-//    rust(project(":platform-art"))
 
     implementation("org.jetbrains.kotlin", "kotlin-stdlib", Plugins.KOTLIN)
     implementation("fr.stardustenterprises", "yanl", Dependencies.YANL)
 
     testImplementation("org.jetbrains.kotlin", "kotlin-test", Plugins.KOTLIN)
-    testImplementation("org.ow2.asm", "asm", Dependencies.ASM)
-    testImplementation("org.ow2.asm", "asm-tree", Dependencies.ASM)
+    listOf("asm", "asm-tree").forEach {
+        testImplementation("org.ow2.asm", it, Dependencies.ASM)
+    }
+    testImplementation("codes.som.anthony", "koffee", Dependencies.KOFFEE) {
+        exclude(group = "org.ow2.asm")
+    }
 }
 
 tasks {
