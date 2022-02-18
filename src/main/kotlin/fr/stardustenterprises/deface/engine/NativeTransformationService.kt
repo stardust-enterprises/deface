@@ -20,25 +20,63 @@ object NativeTransformationService : ITransformationService {
     private val transformers = mutableListOf<IClassTransformer>()
 
     init {
-        NativeLoader.Builder().build().loadLibrary("engine")
+        NativeLoader.Builder().build().loadLibrary("deface")
         registerNatives0()
     }
 
-    override fun getClass(className: String): Class<*> =
+    /**
+     * Finds a class by its name in the JVM.
+     *
+     * @param className the class name
+     *
+     * @return the class with that name
+     */
+    override fun findClass(className: String): Class<*> =
         getClass0(className)
 
+    /**
+     * Gets all the loaded classes in the JVM.
+     *
+     * @return array of loaded classes
+     */
+    override fun getLoadedClasses(): Array<Class<*>> =
+        getLoadedClasses0()
+
+    /**
+     * Checks if a class can be modified.
+     *
+     * @param javaClass the [Class] instance
+     *
+     * @return whether or not the class is modifiable
+     */
+    override fun isModifiable(javaClass: Class<*>): Boolean =
+        isModifiable0(javaClass)
+
+    /**
+     * Force request retransforming of a [Class].
+     *
+     * @param classes array/vararg of [Class]
+     */
+    override fun retransformClasses(vararg classes: Class<*>) =
+        classes.forEach { requestRetransform0(it) }
+
+    /**
+     * Registers transformers to be added.
+     *
+     * @param transformers array/vararg of [IClassTransformer]
+     */
     override fun addTransformers(vararg transformers: IClassTransformer) {
         this.transformers.addAll(transformers)
     }
 
-    override fun getLoadedClasses(): Array<Class<*>> =
-        getLoadedClasses0()
-
-    override fun isModifiable(javaClass: Class<*>): Boolean =
-        isModifiable0(javaClass)
-
-    override fun retransformClasses(vararg classes: Class<*>) =
-        classes.forEach { requestRetransform0(it) }
+    /**
+     * Removes the provided transformers.
+     *
+     * @param transformers array/vararg of [IClassTransformer]
+     */
+    override fun removeTransformers(vararg transformers: IClassTransformer) {
+        transformers.forEach{ this.transformers.remove(it) }
+    }
 
     @JvmStatic
     private external fun getClass0(className: String): Class<*>
