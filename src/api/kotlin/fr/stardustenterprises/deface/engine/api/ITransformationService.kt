@@ -1,7 +1,7 @@
 package fr.stardustenterprises.deface.engine.api
 
 /**
- * Service
+ * Abstract functions for a transformation service.
  *
  * @author xtrm-en
  * @since 0.1.0
