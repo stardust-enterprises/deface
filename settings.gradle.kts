@@ -9,7 +9,5 @@ pluginManagement {
 
 rootProject.name = "deface"
 
-include("engine")
 include("platform-jvm")
 include("platform-art")
-include("framework-mix")

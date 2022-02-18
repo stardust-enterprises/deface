@@ -1,5 +1,5 @@
 plugins {
-    id("fr.stardustenterprises.rust.wrapper") version "3.1.1"
+    id("fr.stardustenterprises.rust.wrapper")
 }
 
 rust {

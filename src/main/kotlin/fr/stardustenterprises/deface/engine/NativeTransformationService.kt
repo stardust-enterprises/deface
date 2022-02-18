@@ -5,8 +5,18 @@ import fr.stardustenterprises.deface.engine.api.ITransformationService
 import fr.stardustenterprises.yanl.NativeLoader
 import java.security.ProtectionDomain
 
+/**
+ * Implementation of an [ITransformationService] using
+ * external native binaries.
+ *
+ * @author xtrm-en
+ * @since 0.1.0
+ */
 object NativeTransformationService : ITransformationService {
 
+    /**
+     * List of [IClassTransformer]
+     */
     private val transformers = mutableListOf<IClassTransformer>()
 
     init {
