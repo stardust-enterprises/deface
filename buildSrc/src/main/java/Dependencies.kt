@@ -2,7 +2,7 @@ private const val kotlinVersion = "1.6.10"
 
 object Plugins {
     const val KOTLIN = kotlinVersion
-    const val RUST = "3.1.1"
+    const val RUST = "3.2.1"
     const val DOKKA = kotlinVersion
 }
 

@@ -10,4 +10,3 @@ pluginManagement {
 rootProject.name = "deface"
 
 include("platform-jvm")
-include("platform-art")

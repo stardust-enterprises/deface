@@ -75,7 +75,7 @@ object NativeTransformationService : ITransformationService {
      * @param transformers array/vararg of [IClassTransformer]
      */
     override fun removeTransformers(vararg transformers: IClassTransformer) {
-        transformers.forEach{ this.transformers.remove(it) }
+        this.transformers.removeIf(transformers::contains)
     }
 
     @JvmStatic
@@ -103,10 +103,18 @@ object NativeTransformationService : ITransformationService {
     ): ByteArray? {
         var buffer = classBuffer
         var modified = false
+
         this.transformers.forEach {
-            buffer = (it.transformClass(redefinedClass, classLoader, className, protectionDomain, buffer) ?: return@forEach)
+            buffer = (it.transformClass(
+                redefinedClass,
+                classLoader,
+                className,
+                protectionDomain,
+                buffer
+            ) ?: return@forEach)
+
             modified = true
         }
-        return if(modified) buffer else null
+        return if (modified) buffer else null
     }
 }

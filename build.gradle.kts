@@ -5,7 +5,7 @@ import java.net.URL
 plugins {
     `java-library`
     kotlin("jvm") version Plugins.KOTLIN
-    id("fr.stardustenterprises.rust.importer") version "3.1.1"
+    id("fr.stardustenterprises.rust.importer") version Plugins.RUST
     id("org.jetbrains.dokka") version Plugins.DOKKA
     `maven-publish`
     signing
@@ -32,7 +32,7 @@ sourceSets {
 
 val projectName = project.name
 group = "fr.stardustenterprises"
-version = "0.2.0"
+version = "0.3.0"
 
 val desc = "Allows for runtime transformation of classes via JVM bytecode."
 val authors = arrayOf("xtrm")
@@ -47,15 +47,17 @@ repositories {
 dependencies {
     rust(project(":platform-jvm"))
 
-    implementation("org.jetbrains.kotlin", "kotlin-stdlib", Plugins.KOTLIN)
-    implementation("fr.stardustenterprises", "yanl", Dependencies.YANL)
+    with(Dependencies) {
+        implementation("org.jetbrains.kotlin", "kotlin-stdlib", KOTLIN)
+        implementation("fr.stardustenterprises", "yanl", YANL)
 
-    testImplementation("org.jetbrains.kotlin", "kotlin-test", Plugins.KOTLIN)
-    listOf("asm", "asm-tree").forEach {
-        testImplementation("org.ow2.asm", it, Dependencies.ASM)
-    }
-    testImplementation("codes.som.anthony", "koffee", Dependencies.KOFFEE) {
-        exclude(group = "org.ow2.asm")
+        testImplementation("org.jetbrains.kotlin", "kotlin-test", KOTLIN)
+        listOf("asm", "asm-tree").forEach {
+            testImplementation("org.ow2.asm", it, ASM)
+        }
+        testImplementation("codes.som.anthony", "koffee", KOFFEE) {
+            exclude(group = "org.ow2.asm")
+        }
     }
 }
 
