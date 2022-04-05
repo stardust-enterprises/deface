@@ -12,24 +12,6 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version "1.0.0"
 }
 
-sourceSets {
-    val main by getting
-    val test by getting
-
-    val api by creating {
-        java.srcDir("src/api/kotlin")
-        resources.srcDir("src/api/resources")
-
-        this.compileClasspath += main.compileClasspath
-        this.runtimeClasspath += main.runtimeClasspath
-    }
-
-    listOf(main, test).forEach {
-        it.compileClasspath += api.output
-        it.runtimeClasspath += api.output
-    }
-}
-
 val projectName = project.name
 group = "fr.stardustenterprises"
 version = "0.3.0"
@@ -58,6 +40,24 @@ dependencies {
         testImplementation("codes.som.anthony", "koffee", KOFFEE) {
             exclude(group = "org.ow2.asm")
         }
+    }
+}
+
+sourceSets {
+    val main by getting
+    val test by getting
+
+    val api by creating {
+        java.srcDir("src/api/kotlin")
+        resources.srcDir("src/api/resources")
+
+        this.compileClasspath += main.compileClasspath
+        this.runtimeClasspath += main.runtimeClasspath
+    }
+
+    listOf(main, test).forEach {
+        it.compileClasspath += api.output
+        it.runtimeClasspath += api.output
     }
 }
 
