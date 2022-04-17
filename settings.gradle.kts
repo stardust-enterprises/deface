@@ -1,12 +1,11 @@
-pluginManagement {
-    repositories {
-        // Fetch plugin from mavenLocal if possible
-        // to aid in plugin development.
-        mavenLocal()
-        gradlePluginPortal()
-    }
-}
-
 rootProject.name = "deface"
 
+pluginManagement.repositories {
+    mavenLocal()
+    gradlePluginPortal()
+}
+
 include("platform-jvm")
+include("hook")
+include("mix")
+include("mix")

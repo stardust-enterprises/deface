@@ -1,6 +1,8 @@
+package fr.stardustenterprises.deface.tests.engine
 
+import fr.stardustenterprises.deface.engine.NativeClassLookupService
 import fr.stardustenterprises.deface.engine.NativeTransformationService
-import fr.stardustenterprises.deface.engine.api.IClassTransformer
+import fr.stardustenterprises.deface.engine.api.transform.IClassTransformer
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.objectweb.asm.ClassReader
@@ -24,44 +26,39 @@ internal class NativeTests {
     @Suppress("UNNECESSARY_SAFE_CALL")
     @Test
     fun `can list all classes`() {
-        val classes = NativeTransformationService.getLoadedClasses()
-        assert(classes?.isNotEmpty())
+        val classes = NativeClassLookupService.getLoadedClasses()
+        assert(classes.isNotEmpty())
     }
 
     @Test
     fun `can get any class`() {
-        assertDoesNotThrow {
-            NativeTransformationService.findClass(
-                "java/lang/String"
-            )
-            NativeTransformationService.findClass(
-                "java/security/ProtectionDomain"
-            )
-            NativeTransformationService.findClass(
-                "NativeTests"
-            )
-        }
+        with(NativeClassLookupService) {
+            assertDoesNotThrow {
+                findClass("java/lang/String")
+                findClass("java/security/ProtectionDomain")
+                findClass("NativeTests")
+            }
 
-        assertThrows<NoClassDefFoundError> {
-            NativeTransformationService.findClass(
-                "llllllllllllllllllllllllllll/${UUID.randomUUID()}"
-            )
+            assertThrows<NoClassDefFoundError> {
+                findClass("kfIopgdsjlsiuFJ/${UUID.randomUUID()}")
+            }
         }
     }
 
     @Test
     fun `is current class modifiable`() {
-        assert(NativeTransformationService.isModifiable(javaClass))
+        assert(NativeClassLookupService.isModifiable(javaClass))
     }
 
     @Test
     fun `modify current class`() {
         assert(!NativeTransformTest.hasBeenModified())
 
-        NativeTransformationService.addTransformers(Transformer)
-        NativeTransformationService.retransformClasses(
-            NativeTransformTest::class.java
-        )
+        with(NativeTransformationService) {
+            transformers += Transformer
+            retransformClasses(NativeTransformTest::class.java)
+            transformers -= Transformer
+        }
 
         assert(NativeTransformTest.hasBeenModified())
     }
