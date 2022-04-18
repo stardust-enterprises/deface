@@ -45,7 +45,24 @@ dependencies {
 ```
 
 # using
+`TODO`
 
+# building
+this project depends on the [Cargo][rust], [Cross][cross], and [osxcross][osxcross] projects.
+
+you'll first need to install [Rust][rust] and [Cargo][rust] on your machine via the [rustup][rustup] tool, then install
+`cross` via this command:
+```bash
+cargo install cross
+```
+
+after that, you'd need to setup `osxcross` by following the instructions on their [github repo][osxcross].
+
+then you can build the project via [Gradle][gradle] by running the following command:
+```bash
+./gradlew build
+```
+this should download the dependencies and build the project automatically.
 
 
 # troubleshooting
@@ -78,11 +95,13 @@ this project is under the [ISC license][project-license].
 
 [mixin]: https://github.com/SpongePowered/Mixin "sponge's mixin"
 
-[tree-engine]: https://github.com/stardust-enterprises/deface/tree/trunk/engine "engine source code"
+[gradle]: https://gradle.org "gradle website"
 
-[tree-hook]: https://github.com/stardust-enterprises/deface/tree/trunk/hook "hook source code"
+[rustup]: https://www.rust-lang.org/learn/get-started "rustup website"
 
-[tree-mix]: https://github.com/stardust-enterprises/deface/tree/trunk/mix "mix source code"
+[cross]: https://github.com/cross-rs/cross "cross github page"
+
+[osxcross]: https://github.com/tpoechtrager/osxcross "osxcross github page"
 
 <!-- Project Links -->
 
@@ -99,6 +118,12 @@ this project is under the [ISC license][project-license].
 [project-gradle-ci]: https://github.com/stardust-enterprises/deface/actions/workflows/build.yml "gradle ci workflow"
 
 [project-license]: https://github.com/stardust-enterprises/deface/blob/trunk/LICENSE "LICENSE source file"
+
+[tree-engine]: https://github.com/stardust-enterprises/deface/tree/trunk/engine "engine source code"
+
+[tree-hook]: https://github.com/stardust-enterprises/deface/tree/trunk/hook "hook source code"
+
+[tree-mix]: https://github.com/stardust-enterprises/deface/tree/trunk/mix "mix source code"
 
 <!-- Badges -->
 
