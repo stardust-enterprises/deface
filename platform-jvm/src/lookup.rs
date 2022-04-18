@@ -1,7 +1,3 @@
-#![allow(non_snake_case)]
-
-extern crate jvm_rs;
-
 use std::{
     ffi::CString,
     ptr::null_mut,
