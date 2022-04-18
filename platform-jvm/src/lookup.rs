@@ -3,23 +3,34 @@ use std::{
     ptr::null_mut,
 };
 use jvm_rs::{
-    jni::{jboolean, jclass, jint, JNIEnv, jobject, jobjectArray, jstring},
+    jni::{jboolean, jclass, jint, JNIEnv, jobject, jobjectArray},
     jvmti::jvmtiError_JVMTI_ERROR_NONE,
 };
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeTransformationService_getClass0(
-    env: *mut JNIEnv,
+pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeLookupService_getClassLoaderClasses0(
+    jni: *mut JNIEnv,
     _class: jclass,
-    class_name: jstring,
-) -> jclass {
-    let c_str = (*(*env)).GetStringUTFChars.unwrap()(env, class_name, &mut 0);
+    class_loader: jobject,
+) -> jobjectArray {
+    let jvmti = crate::agent::JVMTI;
 
-    (*(*env)).FindClass.unwrap()(env, c_str)
+    let mut class_count: jint = 0;
+    let mut classes_ptr: *mut jclass = null_mut();
+    let error = (*(*jvmti)).GetClassLoaderClasses.unwrap()(jvmti, class_loader, &mut class_count, &mut classes_ptr);
+    if error != jvmtiError_JVMTI_ERROR_NONE {
+        println!("[libdeface] Something has gone horribly wrong. @ GetClassLoaderClasses, error: {}", error);
+        return null_mut();
+    }
+
+    let class_name = CString::new("java/lang/Class").unwrap();
+    let class_array_class = (*(*jni)).FindClass.unwrap()(jni, class_name.as_ptr());
+
+    create_object_array(jni, class_count, classes_ptr, class_array_class)
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeTransformationService_getLoadedClasses0(
+pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeLookupService_getLoadedClasses0(
     jni: *mut JNIEnv,
     _class: jclass,
 ) -> jobjectArray {
@@ -40,7 +51,7 @@ pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeTr
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeTransformationService_isModifiable0(
+pub unsafe extern "system" fn Java_fr_stardustenterprises_deface_engine_NativeLookupService_isModifiable0(
     _jni: *mut JNIEnv,
     _class: jclass,
     target_class: jclass,

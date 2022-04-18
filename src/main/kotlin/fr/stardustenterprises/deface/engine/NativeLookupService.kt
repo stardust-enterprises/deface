@@ -1,14 +1,14 @@
 package fr.stardustenterprises.deface.engine
 
-import fr.stardustenterprises.deface.engine.api.IClassLookupService
+import fr.stardustenterprises.deface.api.engine.ILookupService
 
 /**
- * [IClassLookupService] implementation using the JVMTI native interface.
+ * [ILookupService] implementation using the JVMTI native interface.
  *
  * @author xtrm
  * @since 0.4.0
  */
-object NativeClassLookupService : IClassLookupService {
+object NativeLookupService : ILookupService {
     init {
         Loader.ensureLoaded()
     }
@@ -16,9 +16,10 @@ object NativeClassLookupService : IClassLookupService {
     /**
      * @inheritDoc
      */
-    override fun findClass(className: String): Class<*> =
-        getLoadedClasses().firstOrNull { it.name == className }
-            ?: throw ClassNotFoundException(className)
+    override fun findClass(className: String): Class<*>? =
+        getLoadedClasses().firstOrNull {
+            it.name.replace('.', '/') == className
+        }
 
     /**
      * @inheritDoc
@@ -27,6 +28,7 @@ object NativeClassLookupService : IClassLookupService {
         try {
             getLoadedClasses0()?.toList() ?: emptyList()
         } catch (throwable: Throwable) {
+            throwable.printStackTrace()
             emptyList()
         }
 
@@ -39,6 +41,7 @@ object NativeClassLookupService : IClassLookupService {
         try {
             getClassLoaderClasses0(classLoader)?.toList() ?: emptyList()
         } catch (throwable: Throwable) {
+            throwable.printStackTrace()
             emptyList()
         }
 
@@ -54,13 +57,13 @@ object NativeClassLookupService : IClassLookupService {
         }
 
     @JvmStatic
-    internal external fun getLoadedClasses0(): Array<Class<*>>?
+    private external fun getLoadedClasses0(): Array<Class<*>>?
 
     @JvmStatic
-    internal external fun getClassLoaderClasses0(
+    private external fun getClassLoaderClasses0(
         classLoader: ClassLoader,
     ): Array<Class<*>>?
 
     @JvmStatic
-    internal external fun isModifiable0(clazz: Class<*>): Boolean
+    private external fun isModifiable0(clazz: Class<*>): Boolean
 }

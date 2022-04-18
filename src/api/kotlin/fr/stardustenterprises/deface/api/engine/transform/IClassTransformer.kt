@@ -1,8 +1,7 @@
-package fr.stardustenterprises.deface.engine.api.transform
+package fr.stardustenterprises.deface.api.engine.transform
 
 import java.lang.instrument.ClassFileTransformer
 import java.security.ProtectionDomain
-import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Functional Interface for all class transformation processors.
@@ -12,17 +11,6 @@ import java.util.concurrent.atomic.AtomicInteger
  */
 @FunctionalInterface
 fun interface IClassTransformer {
-    /**
-     * If you want to run your transformer before another,
-     * this value will handle transformation priority.
-     *
-     * The higher the number, the earlier the transformer will be executed.
-     *
-     * @return this transformer's priority
-     */
-    val priority: AtomicInteger
-        get() = AtomicInteger(0)
-
     /**
      * Transforms and returns the bytecode of the given class.
      *
@@ -57,13 +45,12 @@ fun interface IClassTransformer {
         @JvmStatic
         fun from(
             transformer: ClassFileTransformer,
-            priority: Int = 0,
         ): IClassTransformer = IClassTransformer {
-                redefinedClass,
-                classLoader,
-                className,
-                protectionDomain,
-                classBuffer,
+            redefinedClass,
+            classLoader,
+            className,
+            protectionDomain,
+            classBuffer,
             ->
 
             transformer.transform(
@@ -73,6 +60,6 @@ fun interface IClassTransformer {
                 protectionDomain,
                 classBuffer
             )
-        }.apply { this.priority.set(priority) }
+        }
     }
 }

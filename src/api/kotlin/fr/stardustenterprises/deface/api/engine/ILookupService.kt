@@ -1,4 +1,4 @@
-package fr.stardustenterprises.deface.engine.api
+package fr.stardustenterprises.deface.api.engine
 
 /**
  * Interface for looking-up and getting [Class]es information.
@@ -6,7 +6,7 @@ package fr.stardustenterprises.deface.engine.api
  * @author xtrm
  * @since 0.4.0
  */
-interface IClassLookupService {
+interface ILookupService {
     /**
      * Finds a class by its name in the JVM.
      *

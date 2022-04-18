@@ -1,8 +1,8 @@
 package fr.stardustenterprises.deface.engine
 
-import fr.stardustenterprises.deface.engine.api.ITransformationService
-import fr.stardustenterprises.deface.engine.api.transform.IClassTransformer
-import fr.stardustenterprises.deface.engine.api.transform.ITransformationManager
+import fr.stardustenterprises.deface.api.engine.ITransformationService
+import fr.stardustenterprises.deface.api.engine.transform.IClassTransformer
+import fr.stardustenterprises.deface.api.engine.transform.ITransformationManager
 import java.security.ProtectionDomain
 
 /**
@@ -11,7 +11,10 @@ import java.security.ProtectionDomain
  * @author xtrm
  * @since 0.1.0
  */
-object NativeTransformationService: ITransformationService, ITransformationManager {
+object NativeTransformationService : ITransformationService, ITransformationManager {
+    /**
+     * @inheritDoc
+     */
     override val transformers: MutableList<IClassTransformer> =
         mutableListOf()
 
@@ -20,9 +23,15 @@ object NativeTransformationService: ITransformationService, ITransformationManag
         registerNatives0()
     }
 
+    /**
+     * @inheritDoc
+     */
     override fun retransformClasses(vararg classes: Class<*>) =
         classes.forEach { retransformClass0(it) }
 
+    /**
+     * @inheritDoc
+     */
     override fun transform(
         redefinedClass: Class<*>?,
         classLoader: ClassLoader?,
@@ -33,15 +42,16 @@ object NativeTransformationService: ITransformationService, ITransformationManag
         var buffer = classBuffer
         var modified = false
 
-        this.transformers.sortedBy { it.priority.get() }.forEach {
-            buffer = (it.transformClass(
+        this.transformers.forEach {
+            val tmp = it.transformClass(
                 redefinedClass,
                 classLoader,
                 className,
                 protectionDomain,
                 buffer
-            ) ?: return@forEach)
+            ) ?: return@forEach
 
+            buffer = tmp
             modified = true
         }
         return if (modified) buffer else null

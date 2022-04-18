@@ -126,7 +126,10 @@ allprojects {
 
         // Disable unneeded rules
         ktlint {
-            this.disabledRules.add("no-wildcard-imports")
+            this.disabledRules.addAll(
+                "no-wildcard-imports",
+                "filename"
+            )
         }
 
         tasks {
@@ -139,10 +142,8 @@ allprojects {
                 kotlinOptions {
                     jvmTarget = targetVersion
                     freeCompilerArgs = listOf(
-                        "-opt-in=kotlin.RequiresOptIn",
-                        "-Xcontext-receivers"
+                        "-opt-in=kotlin.RequiresOptIn"
                     )
-                    languageVersion = "1.9"
                 }
             }
             compileJava {
@@ -159,7 +160,7 @@ allprojects {
                     // automagically creating here.
 
                     doFirst {
-                        moduleFile.writeText("# ${this.project.name}")
+                        moduleFile.writeText("# Module ${this.project.name}")
                     }
 
                     doLast {
