@@ -119,7 +119,7 @@ this project is under the [ISC license][project-license].
 
 [project-license]: https://github.com/stardust-enterprises/deface/blob/trunk/LICENSE "LICENSE source file"
 
-[tree-engine]: https://github.com/stardust-enterprises/deface/tree/trunk/engine "engine source code"
+[tree-engine]: https://github.com/stardust-enterprises/deface/tree/trunk/src "engine source code"
 
 [tree-hook]: https://github.com/stardust-enterprises/deface/tree/trunk/hook "hook source code"
 
