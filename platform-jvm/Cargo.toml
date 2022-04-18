@@ -1,6 +1,6 @@
 [package]
 name = "deface"
-version = "1.0.0"
+version = "0.4.0"
 authors = ["xTrM_"]
 
 [lib]
@@ -8,3 +8,7 @@ crate_type = ["cdylib"]
 
 [dependencies]
 jvm-rs = { git = "https://github.com/x4e/jvm-rs/" }
+
+[profile.release]
+lto = true
+codegen-units = 1
