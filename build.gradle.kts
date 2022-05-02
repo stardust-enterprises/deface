@@ -80,6 +80,7 @@ subprojects {
 }
 
 allprojects {
+    println("Configuring project ${project.name}")
     if (!project.name.startsWith("platform")) {
         // Maven Repositories
         repositories {
@@ -297,9 +298,22 @@ allprojects {
             }
         }
 
+        // Create configurations for artifact consumption
+        configurations {
+            additionalSourceSets.forEach { set ->
+                create(set + "Compile") {
+                    isCanBeConsumed = true
+                    isCanBeResolved = true
+                }
+            }
+        }
+
         // Declare the artifacts
         artifacts {
             defaultArtifactTasks.forEach(::archives)
+            additionalSourceSets.forEach { set ->
+                add(set + "Compile", tasks[set + "Jar"])
+            }
         }
 
         publishing.publications {

@@ -1,7 +1,7 @@
 package fr.stardustenterprises.deface.tests.engine
 
-import fr.stardustenterprises.deface.engine.NativeTransformationService
 import fr.stardustenterprises.deface.api.engine.transform.IClassTransformer
+import fr.stardustenterprises.deface.engine.NativeTransformationService
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter

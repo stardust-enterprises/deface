@@ -6,6 +6,5 @@ pluginManagement.repositories {
 }
 
 include("platform-jvm")
-include("hook")
-include("mix")
+include("patcher")
 include("mix")
