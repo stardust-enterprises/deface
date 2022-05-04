@@ -41,4 +41,25 @@ interface ILookupService {
      * @return whether a class if modifiable or not.
      */
     fun isModifiable(clazz: Class<*>): Boolean
+
+    /**
+     * Companion object used to get service instances.
+     */
+    companion object {
+        /**
+         * The [ServiceLoader] instance.
+         */
+        private val loader: ServiceLoader<ILookupService> = 
+            ServiceLoader.load(ILookupService::class.java)
+
+        /**
+         * The list of [ILookupService] implementations.
+         */
+        @JvmStatic
+        val SERVICES: List<ILookupService>
+            get() = {
+                loader.reload()
+                return loader.iterator().asSequence().toList()
+            }
+    }
 }

@@ -43,23 +43,22 @@ fun interface IClassTransformer {
          * @return the Deface transformer
          */
         @JvmStatic
-        fun from(
-            transformer: ClassFileTransformer,
-        ): IClassTransformer = IClassTransformer {
-            redefinedClass,
-            classLoader,
-            className,
-            protectionDomain,
-            classBuffer,
-            ->
-
-            transformer.transform(
+        fun from(transformer: ClassFileTransformer): IClassTransformer =
+            IClassTransformer {
+                redefinedClass,
                 classLoader,
                 className,
-                redefinedClass,
                 protectionDomain,
-                classBuffer
-            )
-        }
+                classBuffer,
+                ->
+
+                transformer.transform(
+                    classLoader,
+                    className,
+                    redefinedClass,
+                    protectionDomain,
+                    classBuffer
+                )
+            }
     }
 }
