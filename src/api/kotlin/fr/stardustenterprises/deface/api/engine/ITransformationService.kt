@@ -34,7 +34,7 @@ fun interface ITransformationService {
         val SERVICES: List<ITransformationService>
             get() {
                 loader.reload()
-                return loader.iterator().asSequence().toList()
+                return loader.toList()
             }
     }
 }

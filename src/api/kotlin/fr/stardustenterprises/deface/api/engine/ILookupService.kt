@@ -61,7 +61,7 @@ interface ILookupService {
         val SERVICES: List<ILookupService>
             get() {
                 loader.reload()
-                return loader.iterator().asSequence().toList()
+                return loader.toList()
             }
     }
 }
