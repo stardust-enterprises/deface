@@ -80,7 +80,6 @@ subprojects {
 }
 
 allprojects {
-    println("Configuring project ${project.name}")
     if (!project.name.startsWith("platform")) {
         // Maven Repositories
         repositories {
