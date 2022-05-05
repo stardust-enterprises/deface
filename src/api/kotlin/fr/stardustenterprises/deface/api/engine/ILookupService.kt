@@ -1,5 +1,7 @@
 package fr.stardustenterprises.deface.api.engine
 
+import java.util.*
+
 /**
  * Interface for looking-up and getting [Class]es information.
  *
@@ -49,7 +51,7 @@ interface ILookupService {
         /**
          * The [ServiceLoader] instance.
          */
-        private val loader: ServiceLoader<ILookupService> = 
+        private val loader: ServiceLoader<ILookupService> =
             ServiceLoader.load(ILookupService::class.java)
 
         /**
@@ -57,7 +59,7 @@ interface ILookupService {
          */
         @JvmStatic
         val SERVICES: List<ILookupService>
-            get() = {
+            get() {
                 loader.reload()
                 return loader.iterator().asSequence().toList()
             }

@@ -1,6 +1,6 @@
 package fr.stardustenterprises.deface.api.engine
 
-import java.util.ServiceLoader
+import java.util.*
 
 /**
  * Transformation service interface.
@@ -24,7 +24,7 @@ fun interface ITransformationService {
         /**
          * The [ServiceLoader] instance.
          */
-        private val loader: ServiceLoader<ITransformationService> = 
+        private val loader: ServiceLoader<ITransformationService> =
             ServiceLoader.load(ITransformationService::class.java)
 
         /**
@@ -32,7 +32,7 @@ fun interface ITransformationService {
          */
         @JvmStatic
         val SERVICES: List<ITransformationService>
-            get() = {
+            get() {
                 loader.reload()
                 return loader.iterator().asSequence().toList()
             }
