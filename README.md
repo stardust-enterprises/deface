@@ -3,19 +3,8 @@
 [![Build][badge-github-ci]][project-gradle-ci]
 [![Maven Central][badge-mvnc]][project-mvnc]
 
-**deface** is an open-source runtime transformation framework for the
+**deface** is an open-source runtime transformation library for the
 [JVM][jvm], written in [Kotlin][kotlin] and [Rust][rust].
-
-**deface** comes in three different flavors:
-- [engine][tree-engine]
-    - the engine is what makes the transformations happen, implementing the API
-      via Native code using the [JVMTI][jvmti] API.
-- [hook][tree-hook]
-    - the hooking framework, which provides a nicer API, and allows 
-      for common "hooking" transformations to be applied easily.
-- [mix][tree-mix]
-    - a transformation framework heavily inspired by [SpongePowered/Mixin][mixin], 
-      which allows for a more declarative and opinionated style of transformation.
 
 # importing
 
@@ -44,26 +33,39 @@ dependencies {
 </dependency>
 ```
 
-# using
+# usage
 `TODO`
 
 # building
-this project depends on the [Cargo][rust], [Cross][cross], and [osxcross][osxcross] projects.
+**important**: this part assumes you're using a Linux host as `osxcross` isn't supported yet on Windows hosts. 
 
-you'll first need to install [Rust][rust] and [Cargo][rust] on your machine via the [rustup][rustup] tool, then install
-`cross` via this command:
-```bash
-cargo install cross
+this project depends on the [Cargo][rust] and [osxcross][osxcross] projects.
+
+to install cargo, install [Rust][rust] on your machine via the [rustup][rustup] tool.
+
+## toolchains
+
+### windows & linux arm
+this project requires multiple cross-compilation toolchains, which might differ depending on your distribution.
+
+here are the required packages for ArchLinux:
+```shell
+sudo pacman -Sy --noconfirm \
+  gcc \
+  mingw-w64-gcc mingw-w64-headers \
+  aarch64-linux-gnu-gcc
 ```
 
-after that, you'd need to setup `osxcross` by following the instructions on their [github repo][osxcross].
+### macOS
+to create a cross-compilation toolchain for macOS, you'd need to setup `osxcross` 
+by following the instructions on their [github repo][osxcross].
 
-then you can build the project via [Gradle][gradle] by running the following command:
+## actually building
+you can then build the project via [Gradle][gradle] by running the following command:
 ```bash
 ./gradlew build
 ```
-this should download the dependencies and build the project automatically.
-
+this should download the project dependencies and build the project automatically.
 
 # troubleshooting
 
