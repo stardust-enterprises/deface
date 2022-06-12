@@ -3,7 +3,7 @@ plugins {
 }
 
 rust {
-    this.command.set("cross")
+    this.command.set("cargo")
 
     cargoInstallTargets.set(true)
 
