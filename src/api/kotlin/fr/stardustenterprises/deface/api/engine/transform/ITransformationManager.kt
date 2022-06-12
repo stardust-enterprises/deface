@@ -3,7 +3,8 @@ package fr.stardustenterprises.deface.api.engine.transform
 import java.security.ProtectionDomain
 
 /**
- * Manages transformations.
+ * Manager interface in charge of listing and
+ * dispatching classes to transformers.
  *
  * @author xtrm
  * @since 0.4.0

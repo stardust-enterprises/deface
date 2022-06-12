@@ -21,7 +21,7 @@ internal object Loader {
 
     internal fun ensureLoaded() {
         if (!loaded) {
-            throw IllegalStateException("deface could not loaded")
+            throw IllegalStateException("libdeface could not be loaded.")
         }
     }
 }
