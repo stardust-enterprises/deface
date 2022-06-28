@@ -5,3 +5,7 @@
 **target/
 
 **Cargo.lock
+
+# vim ffs
+.project
+.settings/
