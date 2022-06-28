@@ -21,6 +21,12 @@ jobs:
             - name: Install the required toolchains
               run: sudo apt-get install -y gcc gcc-mingw-w64 gcc-aarch64-linux-gnu
 
+            - name: OSXCross for CGO Support
+              run: |
+                  mkdir ../../osxcross
+                  git clone https://github.com/xtrm-en/osxcross-target ../../osxcross/target
+                  echo "/home/runner/work/osxcross/target/bin" >> $GITHUB_PATH
+
             - name: Set up JDK ${{ matrix.java }}
               uses: actions/setup-java@v1
               with:
