@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED_VARIABLE")
-
 import java.net.URL
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
@@ -32,16 +30,14 @@ plugins {
 val targetVersion = "1.8"
 // What JVM version this project is written in
 val sourceVersion = "1.8"
-// Which source-sets to add.
-val additionalSourceSets: Array<String> = arrayOf(
-    "api"
-)
 
 // Project Dependencies
 dependencies {
     rust(project(":platform-jvm"))
 
     with(Dependencies) {
+        api(project(":api"))
+
         kotlinModules.forEach {
             implementation("org.jetbrains.kotlin", "kotlin-$it", KOTLIN)
         }
@@ -57,6 +53,7 @@ dependencies {
 
         testImplementation("org.jetbrains.kotlin", "kotlin-test", KOTLIN)
     }
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 group = Coordinates.GROUP
@@ -96,27 +93,6 @@ allprojects {
                     if (requested.group == "org.jetbrains.kotlin") {
                         useVersion(Dependencies.KOTLIN)
                     }
-                }
-            }
-        }
-
-        // Generate the required source set
-        additionalSourceSets.forEach { name ->
-            sourceSets {
-                val main by sourceSets
-                val test by sourceSets
-
-                val sourceSet = create(name) {
-                    java.srcDir("src/$name/kotlin")
-                    resources.srcDir("src/$name/resources")
-
-                    this.compileClasspath += main.compileClasspath
-                    this.runtimeClasspath += main.runtimeClasspath
-                }
-
-                arrayOf(main, test).forEach {
-                    it.compileClasspath += sourceSet.output
-                    it.runtimeClasspath += sourceSet.output
                 }
             }
         }
@@ -238,23 +214,7 @@ allprojects {
                     }
                 }
 
-                additionalSourceSets.forEach {
-                    from(sourceSets[it].output)
-                }
                 from("LICENSE")
-            }
-
-            additionalSourceSets.forEach {
-                // Custom artifact, only including the output of
-                // the source set and the LICENSE file.
-                create(it + "Jar", Jar::class) {
-                    group = "build"
-
-                    archiveClassifier.set(it)
-                    from(sourceSets[it].output)
-
-                    from("LICENSE")
-                }
             }
 
             // Source artifact, including everything the 'main' does but not compiled.
@@ -263,10 +223,6 @@ allprojects {
 
                 archiveClassifier.set("sources")
                 from(sourceSets["main"].allSource)
-
-                additionalSourceSets.forEach {
-                    from(sourceSets[it].allSource)
-                }
 
                 this.manifest.from(jar.get().manifest)
 
@@ -291,28 +247,11 @@ allprojects {
         val defaultArtifactTasks = arrayOf(
             tasks["sourcesJar"],
             tasks["javadocJar"]
-        ).also { arr ->
-            additionalSourceSets.forEach { set ->
-                arr.plus(tasks[set + "Jar"])
-            }
-        }
-
-        // Create configurations for artifact consumption
-        configurations {
-            additionalSourceSets.forEach { set ->
-                create(set + "Compile") {
-                    isCanBeConsumed = true
-                    isCanBeResolved = true
-                }
-            }
-        }
+        )
 
         // Declare the artifacts
         artifacts {
             defaultArtifactTasks.forEach(::archives)
-            additionalSourceSets.forEach { set ->
-                add(set + "Compile", tasks[set + "Jar"])
-            }
         }
 
         publishing.publications {

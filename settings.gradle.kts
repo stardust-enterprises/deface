@@ -6,3 +6,4 @@ pluginManagement.repositories {
 }
 
 include("platform-jvm")
+include("api")

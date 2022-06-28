@@ -33,8 +33,8 @@ dependencies {
 </dependency>
 ```
 
-# usage
-`TODO`
+# using
+**note**: you might want to check the [test sourceset](https://github.com/stardust-enterprises/deface/tree/0.4.0/src/test/kotlin/fr/stardustenterprises/deface/tests/engine)
 
 # building
 **important**: this part assumes you're using a Linux host as `osxcross` isn't supported yet on Windows hosts. 
@@ -57,8 +57,9 @@ sudo pacman -Sy --noconfirm \
 ```
 
 ### macOS
-to create a cross-compilation toolchain for macOS, you'd need to setup `osxcross` 
-by following the instructions on their [github repo][osxcross].
+to create a cross-compilation toolchain for macOS, you'd need to set up `osxcross` 
+by following the instructions on their [GitHub repo][osxcross]. 
+(or this handy [chinese blog post](https://ttys3.dev/post/rust-cross-compile-mac-osx-target-under-linux/))
 
 ## actually building
 you can then build the project via [Gradle][gradle] by running the following command:

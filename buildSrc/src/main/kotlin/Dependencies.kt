@@ -8,7 +8,7 @@ object Plugins {
     const val KTLINT = "10.2.1"
     const val DOKKA = "1.6.20"
     const val NEXUS_PUBLISH = "1.0.0"
-    const val RUST = "3.2.1"
+    const val RUST = "3.2.3"
 }
 
 object Dependencies {
